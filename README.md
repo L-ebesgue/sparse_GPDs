@@ -10,7 +10,10 @@
   - and so on
 
 - References
-  - interval replacecement and dionysus
+  - interval replacecement
+  - dionysus
+  - multipers
+  - boundary zigzag persistence
 
 - Tutorials
 
