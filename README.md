@@ -1,20 +1,5 @@
-# sparse_GPDs (Under construction)
+# sparse_GPDs
 
-- Background
+-  With `utils.py`, we compute GPDs of given collection of intervals.
 
-- overview & key features of my code
-
-- dependency
-  - dionysus
-  - multipers
-  - and so on
-
-- References
-  - interval replacecement
-  - dionysus
-  - multipers
-  - boundary zigzag persistence
-
-- Tutorials
-
-- utils.py
+-  See `tutorial.ipynb` for implementations of `utils.py` with some examples.
