@@ -110,33 +110,34 @@ def upper_bound(sparse_grid, full_grid, fast=True):
         Is1, Is2 = Is[:,:6], Is[:,6:]
         x1, x2, x1mb, x2mf, x1pd, x2ph = Is1[:,0:1], Is2[:,0:1], Is1[:,0:1]-Is1[:,3:4], Is2[:,0:1]-Is2[:,3:4], Is1[:,0:1]+Is1[:,5:6], Is2[:,0:1]+Is2[:,5:6]
         y1, y2, y1mc, y2mg, y1pa, y2pe = Is1[:,1:2], Is2[:,1:2], Is1[:,1:2]-Is1[:,4:5], Is2[:,1:2]-Is2[:,4:5], Is1[:,1:2]+Is1[:,2:3], Is2[:,1:2]+Is2[:,2:3]
-        h_a, h_bd, h_d, h_ac = Is1[:,2:3]/2, (Is1[:,3:4]+Is1[:,5:6])/2, Is1[:,5:6]/2, (Is1[:,2:3]+Is1[:,4:5])/2
-        h_e, h_fh, h_h, h_eg = Is2[:,2:3]/2, (Is2[:,3:4]+Is2[:,5:6])/2, Is2[:,5:6]/2, (Is2[:,2:3]+Is2[:,4:5])/2
+        # h_a, h_bd, h_d, h_ac = Is1[:,2:3]/2, (Is1[:,3:4]+Is1[:,5:6])/2, Is1[:,5:6]/2, (Is1[:,2:3]+Is1[:,4:5])/2
+        # h_e, h_fh, h_h, h_eg = Is2[:,2:3]/2, (Is2[:,3:4]+Is2[:,5:6])/2, Is2[:,5:6]/2, (Is2[:,2:3]+Is2[:,4:5])/2
    
         yellow = torch.max(torch.cat([min_max_pair(x2mf,x1mb,y2,y1,  x2mf,x1,y2,y1mc), 
                                       min_max_pair(x2,x1mb,y2mg,y1,  x2,x1,y2mg,y1mc)], dim=1), dim=1, keepdim=True)[0]
 
         green = max_pair(x1pd,x2ph,y1pa,y2pe)
 
-        cyan = torch.max(torch.cat([min_uv_max_pair(x1mb,x2mf,y1,y2,  x1mb,x2,y1,y2mg,  h_a,h_bd), 
-                                    min_uv_max_pair(x1,x2mf,y1mc,y2,  x1,x2,y1mc,y2mg,  h_d,h_ac)], dim=1), dim=1, keepdim=True)[0]
+        # cyan = torch.max(torch.cat([min_uv_max_pair(x1mb,x2mf,y1,y2,  x1mb,x2,y1,y2mg,  h_a,h_bd), 
+        #                             min_uv_max_pair(x1,x2mf,y1mc,y2,  x1,x2,y1mc,y2mg,  h_d,h_ac)], dim=1), dim=1, keepdim=True)[0]
 
-        red = torch.min(torch.cat([max_pair(x2ph,x1pd,y2pe,y1pa),
-                                   max_min_pair(2*h_bd,2*h_a,2*h_d,2*h_ac)/2], dim=1), dim=1, keepdim=True)[0]
+        # red = torch.min(torch.cat([max_pair(x2ph,x1pd,y2pe,y1pa),
+        #                            max_min_pair(2*h_bd,2*h_a,2*h_d,2*h_ac)/2], dim=1), dim=1, keepdim=True)[0]
 
         grey = torch.max(torch.cat([min_max_pair(x1mb,x2mf,y1,y2,  x1mb,x2,y1,y2mg), 
                                     min_max_pair(x1,x2mf,y1mc,y2,  x1,x2,y1mc,y2mg)], dim=1), dim=1, keepdim=True)[0]
 
         purple = max_pair(x2ph,x1pd,y2pe,y1pa)
 
-        blue = torch.max(torch.cat([min_uv_max_pair(x2mf,x1mb,y2,y1,  x2mf,x1,y2,y1mc,  h_fh,h_e), 
-                                    min_uv_max_pair(x2,x1mb,y2mg,y1,  x2,x1,y2mg,y1mc,  h_h,h_eg)], dim=1), dim=1, keepdim=True)[0]
+        # blue = torch.max(torch.cat([min_uv_max_pair(x2mf,x1mb,y2,y1,  x2mf,x1,y2,y1mc,  h_fh,h_e), 
+        #                             min_uv_max_pair(x2,x1mb,y2mg,y1,  x2,x1,y2mg,y1mc,  h_h,h_eg)], dim=1), dim=1, keepdim=True)[0]
 
-        brown = torch.min(torch.cat([max_pair(x1pd,x2ph,y1pa,y2pe),
-                                     max_min_pair(2*h_fh,2*h_e,2*h_h,2*h_eg)/2], dim=1), dim=1, keepdim=True)[0]
+        # brown = torch.min(torch.cat([max_pair(x1pd,x2ph,y1pa,y2pe),
+        #                              max_min_pair(2*h_fh,2*h_e,2*h_h,2*h_eg)/2], dim=1), dim=1, keepdim=True)[0]
 
 #        print([yellow, green, cyan, red, grey, purple, blue, brown])
-        Emax = torch.max(torch.cat([yellow, green, cyan, red, grey, purple, blue, brown], dim=1), dim=1)[0]
+        Emax = torch.max(torch.cat([yellow, green, grey, purple], dim=1), dim=1)[0]
+        # Emax = torch.max(torch.cat([yellow, green, cyan, red, grey, purple, blue, brown], dim=1), dim=1)[0]
         E = torch.reshape(Emax, [Ns, Nf])
 #        print(E)
 
